@@ -40,8 +40,6 @@ class WeiXinTarget extends Target
     public $message_app_secret = '';
     public $toparty = ''; // 部门ID列表，多个接收者用‘|’分隔，最多支持100个。当touser为@all时忽略本参数
 
-    public $token = '';
-
     /**
      * {@inheritdoc}
      */
@@ -64,8 +62,6 @@ class WeiXinTarget extends Target
         if (empty($this->toparty)) {
             throw new InvalidConfigException('The "toparty" option must be set for WeiXinTarget::message.');
         }
-
-        $this->token = $this->getToken();
     }
 
     /**
@@ -119,7 +115,7 @@ class WeiXinTarget extends Target
     {
         $url = 'https://qyapi.weixin.qq.com/cgi-bin/message/send';
         $query = [
-            'access_token' => $this->token,
+            'access_token' => $this->getToken(),
         ];
 
         $data = [
